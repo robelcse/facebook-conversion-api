@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Facebook Conversion API</title>
+
+    <!-- End Meta Pixel Code -->
+    <style>
+        #cardBtn {
+            padding: 10px 45px;
+            font-size: 16px;
+            border: none;
+            background: #c40909;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .container {
+            padding: 100px 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="totaldoller">Total $:</label>
+                    <input type="totaldoller" class="form-control" id="totaldoller" placeholder="Enter totaldoller"
+                        name="totaldoller">
+                </div>
+                <div class="form-group">
+                    <label for="productid">Product Id:</label>
+                    <input type="productid" class="form-control" id="productid" placeholder="Enter productid"
+                        name="productid">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="quantity" class="form-control" id="quantity" placeholder="Enter quantity"
+                        name="quantity">
+                </div>
+
+                <button id="cardBtn">Buy Now</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            !function (f, b, e, v, n, t, s) {
+                if (f.fbq) return; n = f.fbq = function () {
+                    n.callMethod ?
+                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+                n.queue = []; t = b.createElement(e); t.async = !0;
+                t.src = v; s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '721715522415340');
+
+
+            fbq('track', 'AddToCart');
+            fbq('track', 'AddToWishlist');
+
+            $('#cardBtn').click(function (event) {
+
+                event.preventDefault();
+                //purchese information
+
+                let name = document.getElementById("name").value;
+                let email = document.getElementById("email").value;
+                let totaldoller = document.getElementById("totaldoller").value;
+                let productid = document.getElementById("productid").value;
+                let quantity = document.getElementById("quantity").value;
+
+                fbq('track', 'Purchase', {
+                    value: totaldoller,
+                    currency: 'USD',
+                    contents: [
+                        {
+                            id: productid,
+                            quantity: quantity
+                        },
+                        {
+                            id: productid,
+                            quantity: quantity
+                        }],
+                    content_type: 'product',
+                    compared_product: 'recommended-banner-shoes',  // custom property
+                    delivery_category: 'in_store'
+                });
+
+
+            });
+
+
+
+        });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=721715522415340&ev=PageView&noscript=1" /></noscript>
+</body>
+
+</html>
